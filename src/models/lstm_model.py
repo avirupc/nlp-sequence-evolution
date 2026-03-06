@@ -5,7 +5,7 @@ class LSTMClassifier(nn.Module):
     def __init__(self, vocab_size, embed_dim, hidden_dim, output_dim, n_layers=1, dropout=0.2):
         super(LSTMClassifier, self).__init__()
         
-        # 1. Embedding Layer
+        # Embedding Layer
         self.embedding = nn.Embedding(vocab_size, embed_dim)
         
         # 2. LSTM Layer
@@ -17,7 +17,7 @@ class LSTMClassifier(nn.Module):
                             batch_first=True, 
                             dropout=dropout if n_layers > 1 else 0)
         
-        # 3. Final Linear Layer
+        # Final Linear Layer
         self.fc = nn.Linear(hidden_dim, output_dim)
         self.dropout = nn.Dropout(dropout)
         

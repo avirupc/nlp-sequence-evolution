@@ -5,14 +5,14 @@ class RNNClassifier(nn.Module):
     def __init__(self, vocab_size, embed_dim, hidden_dim, output_dim):
         super(RNNClassifier, self).__init__()
         
-        # 1. Embedding Layer: Turns word indices into dense vectors
+        # Embedding Layer: Turns word indices into dense vectors
         self.embedding = nn.Embedding(vocab_size, embed_dim)
         
-        # 2. RNN Layer: Processes the sequence step-by-step
+        # RNN Layer: Processes the sequence step-by-step
         # batch_first=True means input shape is (batch, seq, feature)
         self.rnn = nn.RNN(embed_dim, hidden_dim, batch_first=True)
         
-        # 3. Fully Connected Layer: Maps hidden state to sentiment (0 or 1)
+        # Fully Connected Layer: Maps hidden state to sentiment (0 or 1)
         self.fc = nn.Linear(hidden_dim, output_dim)
         
     def forward(self, text):

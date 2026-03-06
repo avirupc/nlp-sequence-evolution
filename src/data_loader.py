@@ -8,10 +8,10 @@ def get_dataloaders(model_name="bert-base-uncased", batch_size=32, max_len=256):
     Loads IMDb dataset and returns PyTorch DataLoaders.
     For Phase 1 (Uniform Preprocessing), we use a consistent tokenizer.
     """
-    # 1. Load the dataset from Hugging Face
+    # Load the dataset from Hugging Face
     dataset = load_dataset("imdb")
     
-    # 2. Load a tokenizer
+    # Load a tokenizer
     # We use a standard one to keep the baseline fair across RNN/Transformer
     tokenizer = AutoTokenizer.from_pretrained(model_name)
 
@@ -23,15 +23,15 @@ def get_dataloaders(model_name="bert-base-uncased", batch_size=32, max_len=256):
             max_length=max_len
         )
 
-    # 3. Preprocess the data
+    # Preprocess the data
     tokenized_datasets = dataset.map(tokenize_function, batched=True)
     
-    # 4. Set format for PyTorch
+    # Set format for PyTorch
     # We only need input_ids and label for our basic comparison
     tokenized_datasets = tokenized_datasets.remove_columns(["text"])
     tokenized_datasets.set_format("torch")
 
-    # 5. Create DataLoaders
+    # Create DataLoaders
     train_loader = DataLoader(
         tokenized_datasets["train"], 
         shuffle=True, 
